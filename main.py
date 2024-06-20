@@ -23,10 +23,16 @@ def sign_up_database():
     hasher.update(password.encode())
     hashed_password = hasher.hexdigest()
 
-    database_user_client_side.sign_up(username, hashed_password, avatar_path)
+    #avatar image processing to binary data to be stored in database
+    with open(avatar_path , 'rb') as pre_binary:
+        binary = pre_binary.read()
+
+    database_user_client_side.sign_up(username, hashed_password, binary)
 
 #Database log in function
 def log_in_database():
+    global placeholder_frame,form
+
     username = username_entry.get()
     password = password_entry.get()
 
@@ -36,6 +42,10 @@ def log_in_database():
     hashed_password = hasher.hexdigest()
 
     database_user_client_side.log_in(username, hashed_password)
+
+    #Destroy the placeholder frame
+    form.destroy()
+    placeholder_frame.destroy()
 
 # Function to create and switch to Sign Up frame
 def sign_up():
