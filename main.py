@@ -1,7 +1,12 @@
 from tkinter import *
+import database_user_client_side 
+import hashlib
 
-# Global variables for frames
+# Global variables
 placeholder_frame = None
+username_entry = None
+password_entry = None
+avatar_path_entry = None
 
 # Function to maximize window
 def maximize_window(event=None):
@@ -9,15 +14,32 @@ def maximize_window(event=None):
 
 #Database sign up function
 def sign_up_database():
-    pass
+    username = username_entry.get()
+    password = password_entry.get()
+    avatar_path = avatar_path_entry.get()
+
+    #password hashing
+    hasher = hashlib.sha256()
+    hasher.update(password.encode())
+    hashed_password = hasher.hexdigest()
+
+    database_user_client_side.sign_up(username, hashed_password, avatar_path)
 
 #Database log in function
 def log_in_database():
-    pass
+    username = username_entry.get()
+    password = password_entry.get()
+
+    #password hashing
+    hasher = hashlib.sha256()
+    hasher.update(password.encode())
+    hashed_password = hasher.hexdigest()
+
+    database_user_client_side.log_in(username, hashed_password)
 
 # Function to create and switch to Sign Up frame
 def sign_up():
-    global placeholder_frame
+    global placeholder_frame, username_entry, password_entry, avatar_path_entry
 
     # Destroy any existing placeholder frame
     if placeholder_frame:
@@ -28,28 +50,27 @@ def sign_up():
     placeholder_frame.pack(pady=20)
 
     # Addition of widgets to the Sign Up frame
-    username_label = Label(placeholder_frame,text="Username:")
-    username_entry = Entry(placeholder_frame,width=30)
+    username_label = Label(placeholder_frame, text="Username:")
     username_label.grid(row=0, column=0)
+    username_entry = Entry(placeholder_frame, width=30)
     username_entry.grid(row=0, column=1)
 
-    password_label = Label(placeholder_frame,text="Password:",show="*")
-    password_entry = Entry(placeholder_frame,width=30)
+    password_label = Label(placeholder_frame, text="Password:")
     password_label.grid(row=1, column=0)
+    password_entry = Entry(placeholder_frame, width=30, show="*")
     password_entry.grid(row=1, column=1)
 
-    avatar_path_label = Label(placeholder_frame,text="avatar path:")
-    avatar_path_entry = Entry(placeholder_frame,width=30)
+    avatar_path_label = Label(placeholder_frame, text="Avatar Path:")
     avatar_path_label.grid(row=2, column=0)
+    avatar_path_entry = Entry(placeholder_frame, width=30)
     avatar_path_entry.grid(row=2, column=1)
 
     submit_button = Button(placeholder_frame, text="Sign Up", command=sign_up_database)
     submit_button.grid(row=3, column=1)
 
-   
 # Function to create and switch to Log In frame
 def log_in():
-    global placeholder_frame
+    global placeholder_frame, username_entry, password_entry
 
     # Destroy any existing placeholder frame
     if placeholder_frame:
@@ -60,14 +81,14 @@ def log_in():
     placeholder_frame.pack(pady=20)
 
     # Add widgets as needed for Log In form
-    username_label = Label(placeholder_frame,text="Username:")
-    username_entry = Entry(placeholder_frame,width=30)
+    username_label = Label(placeholder_frame, text="Username:")
     username_label.grid(row=0, column=0)
+    username_entry = Entry(placeholder_frame, width=30)
     username_entry.grid(row=0, column=1)
 
-    password_label = Label(placeholder_frame,text="Password:")
-    password_entry = Entry(placeholder_frame,width=30)
+    password_label = Label(placeholder_frame, text="Password:")
     password_label.grid(row=1, column=0)
+    password_entry = Entry(placeholder_frame, width=30, show="*")
     password_entry.grid(row=1, column=1)
 
     submit_button = Button(placeholder_frame, text="Log In", command=log_in_database)
