@@ -45,3 +45,5 @@ def log_in(username, password):
 
     conn.commit()
     conn.close()
+
+    return user

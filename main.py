@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import database_user_client_side 
 import hashlib
 
@@ -12,38 +13,45 @@ avatar_path_entry = None
 def maximize_window(event=None):
     root.attributes('-fullscreen', True)
 
-#Database sign up function
+# Function to create a pop-up for sign-up success
+def sign_up_success():
+    messagebox.showinfo('Sign Up Success','Sign Up Success')
+
+# Database sign-up function
 def sign_up_database():
     username = username_entry.get()
     password = password_entry.get()
     avatar_path = avatar_path_entry.get()
 
-    #password hashing
+    # Password hashing
     hasher = hashlib.sha256()
     hasher.update(password.encode())
     hashed_password = hasher.hexdigest()
 
-    #avatar image processing to binary data to be stored in database
-    with open(avatar_path , 'rb') as pre_binary:
+    # Avatar image processing to binary data to be stored in database
+    with open(avatar_path, 'rb') as pre_binary:
         binary = pre_binary.read()
 
     database_user_client_side.sign_up(username, hashed_password, binary)
 
-#Database log in function
+    # Call the sign-up success function to show the pop-up
+    sign_up_success()
+
+# Database log-in function
 def log_in_database():
-    global placeholder_frame,form
+    global placeholder_frame, form
 
     username = username_entry.get()
     password = password_entry.get()
 
-    #password hashing
+    # Password hashing
     hasher = hashlib.sha256()
     hasher.update(password.encode())
     hashed_password = hasher.hexdigest()
 
     database_user_client_side.log_in(username, hashed_password)
 
-    #Destroy the placeholder frame
+    # Destroy the placeholder frame
     form.destroy()
     placeholder_frame.destroy()
 
