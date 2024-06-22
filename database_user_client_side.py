@@ -1,5 +1,7 @@
 import sqlite3
 
+user_array = None
+
 # # INITIAL DATABASE CONNECTION 
 # conn = sqlite3.connect("USERS.db")
 # cursor = conn.cursor()
@@ -18,6 +20,8 @@ def sign_up(username, password, avatar):
     conn.close()
 
 def log_in(username, password):
+    global user_array
+
     conn = sqlite3.connect("USERS.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ?", (username, password))
@@ -27,6 +31,8 @@ def log_in(username, password):
         name = user[1]
         hashed_password = user[2] 
         avatar = user[3]
+
+    
 
         table_name = f"table_{hashed_password}"
         
@@ -43,7 +49,8 @@ def log_in(username, password):
             )
         """)
 
+    user_array = user
+
     conn.commit()
     conn.close()
 
-    return user

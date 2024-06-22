@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 import database_user_client_side 
 import hashlib
+from io import BytesIO
+from PIL import Image, ImageTk
 
 # Global variables
 placeholder_frame = None
@@ -15,7 +17,7 @@ def maximize_window(event=None):
 
 # Function to create a pop-up for sign-up success
 def sign_up_success():
-    messagebox.showinfo('Sign Up Success','Sign Up Success')
+    messagebox.showinfo('Sign Up Success', 'Sign Up Success')
 
 # Database sign-up function
 def sign_up_database():
@@ -54,6 +56,21 @@ def log_in_database():
     # Destroy the placeholder frame
     form.destroy()
     placeholder_frame.destroy()
+
+    # Load user details and avatar image
+    user = database_user_client_side.user_array
+    binary_avatar = user[3]
+
+    # Convert binary data to image
+    image = Image.open(BytesIO(binary_avatar))
+    image = image.resize((50, 50))
+    avatar_image = ImageTk.PhotoImage(image)
+
+    # Store avatar image in a persistent variable
+    root.avatar_image = avatar_image
+
+    # BEGIN main instance display
+    main()
 
 # Function to create and switch to Sign Up frame
 def sign_up():
@@ -111,6 +128,54 @@ def log_in():
 
     submit_button = Button(placeholder_frame, text="Log In", command=log_in_database)
     submit_button.grid(row=3, column=1)
+
+# notifications function
+def notifications():
+    pass
+
+# Function to create the main application interface after login
+def main():
+    global root
+
+    main_frame = Frame(root)
+    main_frame.pack(fill=BOTH, expand=True)
+
+    # Side bar creation
+    side_bar_frame = Frame(main_frame, width=200, bg="lightgray", relief="sunken", borderwidth=2)
+    side_bar_frame.pack(expand=False, fill="y", side="left", anchor="nw")
+
+    # User processing
+    user = database_user_client_side.user_array
+    username = user[1]
+    password = user[2]
+
+    # Retrieve avatar image from root object
+    avatar_image = root.avatar_image
+
+    # Widget creation
+    user_details_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    user_details_frame.pack(fill='x')
+    avatar_image_label = Label(user_details_frame, image=avatar_image)
+    avatar_image_label.grid(row=0, column=0)
+    username_label = Label(user_details_frame, text=username.upper())
+    username_label.grid(row=0, column=1)
+
+    # Notification image processing
+    notification_image_pre = Image.open('./Assets/bell.png').resize((50, 50))
+    notification_image = ImageTk.PhotoImage(notification_image_pre)
+    root.notification_image = notification_image  # Store in root to persist
+
+    overdue_button = Button(user_details_frame, image=notification_image, command=notifications, borderwidth=0, highlightthickness=0)
+    overdue_button.grid(row=0, column=2)
+
+    # Sidebar image processing
+    side_pre = Image.open('./Assets/sidebar.png').resize((50, 50))
+    side_bar_image = ImageTk.PhotoImage(side_pre)
+    root.side_bar_image = side_bar_image  # Store in root to persist
+
+    side_bar_button = Button(user_details_frame, image=side_bar_image, command=notifications, borderwidth=0, highlightthickness=0)
+    side_bar_button.grid(row=0, column=3)
+
 
 # Main Tkinter window
 root = Tk()
