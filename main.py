@@ -281,7 +281,6 @@ def main():
 # Main Tkinter window
 root = Tk()
 root.title("DO IT")
-x=None
 
 # Bind window resizing to maximize function
 root.bind('<Configure>', maximize_window)
