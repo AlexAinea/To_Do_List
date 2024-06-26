@@ -1,15 +1,16 @@
-from tkinter import *
-from tkinter import messagebox
-import database_user_client_side 
 import hashlib
 from io import BytesIO
+from tkinter import *
+from tkinter import messagebox
 from PIL import Image, ImageTk
+import database_user_client_side
 
 # Global variables
 placeholder_frame = None
 username_entry = None
 password_entry = None
 avatar_path_entry = None
+main_frame_global = None
 
 # Function to maximize window
 def maximize_window(event=None):
@@ -127,7 +128,33 @@ def log_in():
     password_entry.grid(row=1, column=1)
 
     submit_button = Button(placeholder_frame, text="Log In", command=log_in_database)
-    submit_button.grid(row=3, column=1)
+    submit_button.grid(row=2, column=1)
+
+def priority_database_push(priority_var):
+    pass
+
+
+def priority_level(child_frame):
+
+    priority_var = StringVar()
+
+    p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",variable=priority_var ,command=lambda:priority_database_push(priority_var))
+    p_one.grid(row=0, column=0)
+
+    p_two = Radiobutton(child_frame, text="Priority 2", value= "P2",variable=priority_var, command=lambda:priority_database_push(priority_var))
+    p_two.grid(row=0, column=1)
+
+    p_three = Radiobutton(child_frame, text="Priority 3", value= "P3",variable=priority_var, command=lambda:priority_database_push(priority_var))
+    p_three.grid(row=0, column=2)
+
+#THIS FUNCTION IS FOR DRY:IT TAKE S A PARENT FRAME THAT IS IN GRID FORMAT<PERHAPS A PLACEHOLDER FRAME< AND ENSURES POP UP ABLIITY
+def labels(parent_frame):
+
+    child_frame = Frame(parent_frame)
+    child_frame.grid(row=0, column=1)
+
+    priority_button = Button(parent_frame,text="PRIORITY LEVEL",command=lambda:priority_level(child_frame))
+    priority_button.grid(row=0 , column=0)
 
 # notifications function
 def notifications():
@@ -137,8 +164,36 @@ def notifications():
 def hide():
     pass
 
-def add():
+def add_to_database():
     pass
+
+def add():
+    global main_frame_global
+    #Current page frame
+    current_page_frame = Frame(main_frame_global)
+    current_page_frame.pack(side="right", anchor="ne", fill="y")
+
+    #Addition area
+    add_frame = Frame(current_page_frame)
+    add_frame.pack(anchor=CENTER)
+
+    #Add task WIDGETS
+    add_task_label = Label(add_frame, text="Add Task")
+    add_task_label.grid(row=0, column=0)
+
+    add_task_entry = Entry(add_frame)
+    add_task_entry.grid(row=0, column=1)
+
+    add_task_button = Button(add_frame, text="Add Task", command=add_to_database)
+    add_task_button.grid(row=0, column=2)
+
+    labels_parent_frame = Frame(add_frame)
+    labels_parent_frame.grid(row=1, column=0)
+    # label = Label(labels_parent_frame, text="hi")
+    # label.grid(row=1, column=0)
+    labels(labels_parent_frame)
+
+
 
 def search():
     pass
@@ -160,10 +215,12 @@ def calendar():
 
 # Function to create the main application interface after login
 def main():
-    global root
+    global main_frame_global
 
     main_frame = Frame(root)
     main_frame.pack(fill=BOTH, expand=True)
+
+    main_frame_global = main_frame
 
     # Side bar creation
     side_bar_frame = Frame(main_frame, width=250, bg="lightgray", relief="sunken", borderwidth=2)
@@ -172,7 +229,6 @@ def main():
     # User processing
     user = database_user_client_side.user_array
     username = user[1]
-    password = user[2]
 
     # Retrieve avatar image from root object
     avatar_image = root.avatar_image
@@ -293,7 +349,7 @@ sign_up_button_option = Button(form, text="Sign Up", command=sign_up)
 sign_up_button_option.grid(row=0, column=0)
 
 log_in_button_option = Button(form, text="Log In", command=log_in)
-log_in_button_option.grid(row=0, column=2)
+log_in_button_option.grid(row=0, column=1)
 
 # Start the main event loop
 root.mainloop()
