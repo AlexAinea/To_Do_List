@@ -166,7 +166,7 @@ def main():
     main_frame.pack(fill=BOTH, expand=True)
 
     # Side bar creation
-    side_bar_frame = Frame(main_frame, width=200, bg="lightgray", relief="sunken", borderwidth=2)
+    side_bar_frame = Frame(main_frame, width=250, bg="lightgray", relief="sunken", borderwidth=2)
     side_bar_frame.pack(expand=False, fill="y", side="left", anchor="nw")
 
     # User processing
@@ -179,11 +179,11 @@ def main():
 
     # Widget creation
     user_details_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    user_details_frame.pack(fill='x')
+    user_details_frame.pack(fill='x', pady=10, padx=10)
     avatar_image_label = Label(user_details_frame, image=avatar_image)
-    avatar_image_label.grid(row=0, column=0)
+    avatar_image_label.grid(row=0, column=0, padx=5)
     username_label = Label(user_details_frame, text=username.upper())
-    username_label.grid(row=0, column=1)
+    username_label.grid(row=0, column=1, padx=5)
 
     # Notification image processing
     notification_image_pre = Image.open('./Assets/bell.png').resize((20, 20))
@@ -191,7 +191,7 @@ def main():
     root.notification_image = notification_image  # Store in root to persist
 
     overdue_button = Button(user_details_frame, image=notification_image, command=notifications, borderwidth=0, highlightthickness=0)
-    overdue_button.grid(row=0, column=2,padx=30)
+    overdue_button.grid(row=0, column=2, padx=30)
 
     # Sidebar image processing
     side_pre = Image.open('./Assets/sidebar.png').resize((20, 20))
@@ -199,84 +199,84 @@ def main():
     root.side_bar_image = side_bar_image  # Store in root to persist
 
     side_bar_button = Button(user_details_frame, image=side_bar_image, command=hide, borderwidth=0, highlightthickness=0)
-    side_bar_button.grid(row=0, column=3)
+    side_bar_button.grid(row=0, column=3, padx=5)
 
     add_image_pre = Image.open('./Assets/add.png').resize((20, 20))
     add_image = ImageTk.PhotoImage(add_image_pre)
     root.add_image = add_image  # Store in root to persist
 
     add_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    add_frame.pack(fill='x')
-    add_button = Button(add_frame, image=add_image,command=add)
-    add_button.grid(row=0, column=0)
+    add_frame.pack(fill='x', pady=40, padx=10)
+    add_button = Button(add_frame, image=add_image, command=add)
+    add_button.grid(row=0, column=0, padx=5)
     add_label = Label(add_frame, text='ADD TASK')
-    add_label.grid(row=0, column=1,padx=30)
+    add_label.grid(row=0, column=1, padx=30)
 
     search_image_pre = Image.open('./Assets/search.png').resize((20, 20))
     search_image = ImageTk.PhotoImage(search_image_pre)
     root.search_image = search_image  # Store in root to persist
 
     search_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    search_frame.pack(fill='x')
-    search_button = Button(search_frame, image=search_image,command=search)
-    search_button.grid(row=0, column=0)
+    search_frame.pack(fill='x', pady=40, padx=10)
+    search_button = Button(search_frame, image=search_image, command=search)
+    search_button.grid(row=0, column=0, padx=5)
     search_label = Label(search_frame, text='SEARCH TASK')
-    search_label.grid(row=0, column=1,padx=30)
+    search_label.grid(row=0, column=1, padx=30)
 
     inbox_image_pre = Image.open('./Assets/inbox.png').resize((20, 20))
     inbox_image = ImageTk.PhotoImage(inbox_image_pre)
     root.inbox_image = inbox_image  # Store in root to persist
 
     inbox_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    inbox_frame.pack(fill='x')
-    inbox_button = Button(inbox_frame, image=inbox_image,command=inbox)
-    inbox_button.grid(row=0, column=0)
+    inbox_frame.pack(fill='x', pady=40, padx=10)
+    inbox_button = Button(inbox_frame, image=inbox_image, command=inbox)
+    inbox_button.grid(row=0, column=0, padx=5)
     inbox_label = Label(inbox_frame, text='INBOX')
-    inbox_label.grid(row=0, column=1,padx=30)
+    inbox_label.grid(row=0, column=1, padx=30)
 
     today_image_pre = Image.open('./Assets/today.png').resize((20, 20))
     today_image = ImageTk.PhotoImage(today_image_pre)
     root.today_image = today_image  # Store in root to persist
 
     today_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    today_frame.pack(fill='x')
-    today_button = Button(today_frame, image=today_image,command=today)
-    today_button.grid(row=0, column=0)
+    today_frame.pack(fill='x', pady=40, padx=10)
+    today_button = Button(today_frame, image=today_image, command=today)
+    today_button.grid(row=0, column=0, padx=5)
     today_label = Label(today_frame, text='TODAY')
-    today_label.grid(row=0, column=1,padx=30)
+    today_label.grid(row=0, column=1, padx=30)
 
     upcoming_image_pre = Image.open('./Assets/upcoming.png').resize((20, 20))
     upcoming_image = ImageTk.PhotoImage(upcoming_image_pre)
     root.upcoming_image = upcoming_image  # Store in root to persist
 
     upcoming_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    upcoming_frame.pack(fill='x')
-    upcoming_button = Button(upcoming_frame, image=upcoming_image,command=upcoming)
-    upcoming_button.grid(row=0, column=0)
+    upcoming_frame.pack(fill='x', pady=40, padx=10)
+    upcoming_button = Button(upcoming_frame, image=upcoming_image, command=upcoming)
+    upcoming_button.grid(row=0, column=0, padx=5)
     upcoming_label = Label(upcoming_frame, text='UPCOMING')
-    upcoming_label.grid(row=0, column=1,padx=30)
+    upcoming_label.grid(row=0, column=1, padx=30)
 
     home_image_pre = Image.open('./Assets/home.png').resize((20, 20))
     home_image = ImageTk.PhotoImage(home_image_pre)
     root.home_image = home_image  # Store in root to persist
 
     home_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    home_frame.pack(fill='x')
-    home_button = Button(home_frame, image=home_image,command=home)
-    home_button.grid(row=0, column=0)
+    home_frame.pack(fill='x', pady=40, padx=10)
+    home_button = Button(home_frame, image=home_image, command=home)
+    home_button.grid(row=0, column=0, padx=5)
     home_label = Label(home_frame, text='HOME')
-    home_label.grid(row=0, column=1,padx=30)
+    home_label.grid(row=0, column=1, padx=30)
 
     calendar_image_pre = Image.open('./Assets/calendar.png').resize((20, 20))
     calendar_image = ImageTk.PhotoImage(calendar_image_pre)
     root.calendar_image = calendar_image  # Store in root to persist
 
     calendar_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
-    calendar_frame.pack(fill='x')
-    calendar_button = Button(calendar_frame, image=calendar_image,command=calendar)
-    calendar_button.grid(row=0, column=0)
+    calendar_frame.pack(fill='x', pady=40, padx=10)
+    calendar_button = Button(calendar_frame, image=calendar_image, command=calendar)
+    calendar_button.grid(row=0, column=0, padx=5)
     calendar_label = Label(calendar_frame, text='CALENDAR')
-    calendar_label.grid(row=0, column=1,padx=30)
+    calendar_label.grid(row=0, column=1, padx=30)
 
 # Main Tkinter window
 root = Tk()
