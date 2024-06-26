@@ -11,6 +11,8 @@ username_entry = None
 password_entry = None
 avatar_path_entry = None
 main_frame_global = None
+priority = None
+custom_label = None
 
 # Function to maximize window
 def maximize_window(event=None):
@@ -130,31 +132,40 @@ def log_in():
     submit_button = Button(placeholder_frame, text="Log In", command=log_in_database)
     submit_button.grid(row=2, column=1)
 
-def priority_database_push(priority_var):
-    pass
-
+def set_priority(priority_var):
+    global priority
+    priority = priority_var.get()
 
 def priority_level(child_frame):
-
     priority_var = StringVar()
 
-    p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",variable=priority_var ,command=lambda:priority_database_push(priority_var))
+    p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",variable=priority_var,command=lambda: set_priority(priority_var))
     p_one.grid(row=0, column=0)
 
-    p_two = Radiobutton(child_frame, text="Priority 2", value= "P2",variable=priority_var, command=lambda:priority_database_push(priority_var))
+    p_two = Radiobutton(child_frame, text="Priority 2", value= "P2",variable=priority_var,command=lambda: set_priority(priority_var))
     p_two.grid(row=0, column=1)
 
-    p_three = Radiobutton(child_frame, text="Priority 3", value= "P3",variable=priority_var, command=lambda:priority_database_push(priority_var))
+    p_three = Radiobutton(child_frame, text="Priority 3", value= "P3",variable=priority_var,command=lambda: set_priority(priority_var))
     p_three.grid(row=0, column=2)
+
+def update_custom_label(custom_var):
+        global custom_label
+        custom_label = custom_var.get()
 
 #THIS FUNCTION IS FOR DRY:IT TAKE S A PARENT FRAME THAT IS IN GRID FORMAT<PERHAPS A PLACEHOLDER FRAME< AND ENSURES POP UP ABLIITY
 def labels(parent_frame):
-
     child_frame = Frame(parent_frame)
     child_frame.grid(row=0, column=1)
 
     priority_button = Button(parent_frame,text="PRIORITY LEVEL",command=lambda:priority_level(child_frame))
     priority_button.grid(row=0 , column=0)
+
+    custom_var = StringVar()
+    Label(parent_frame,text="CUSTOM LABEL:").grid(row=0,column=1)
+    custom_label_entry = Entry(parent_frame, textvariable=custom_var)
+    custom_label_entry.grid(row=0,column=2)
+
+    custom_var.trace_add("write", update_custom_label)
 
 # notifications function
 def notifications():
@@ -168,14 +179,14 @@ def add_to_database():
     pass
 
 def add():
-    global main_frame_global
+    global main_frame_global , priority
     #Current page frame
     current_page_frame = Frame(main_frame_global)
-    current_page_frame.pack(side="right", anchor="ne", fill="y")
+    current_page_frame.pack(fill="y")
 
     #Addition area
     add_frame = Frame(current_page_frame)
-    add_frame.pack(anchor=CENTER)
+    add_frame.pack(pady=300)
 
     #Add task WIDGETS
     add_task_label = Label(add_frame, text="Add Task")
@@ -184,13 +195,11 @@ def add():
     add_task_entry = Entry(add_frame)
     add_task_entry.grid(row=0, column=1)
 
-    add_task_button = Button(add_frame, text="Add Task", command=add_to_database)
+    add_task_button = Button(add_frame, text="Add Task", command=lambda:add_to_database(add_task_entry.get(),priority))
     add_task_button.grid(row=0, column=2)
 
     labels_parent_frame = Frame(add_frame)
     labels_parent_frame.grid(row=1, column=0)
-    # label = Label(labels_parent_frame, text="hi")
-    # label.grid(row=1, column=0)
     labels(labels_parent_frame)
 
 
