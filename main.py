@@ -139,14 +139,20 @@ def set_priority(priority_var):
 def priority_level(child_frame):
     priority_var = StringVar()
 
+    randy = Label(child_frame,text="")
+    randy.grid(row=0, column=0)
+
+    randy2 = Label(child_frame,text="")
+    randy2.grid(row=1, column=0)
+
     p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",variable=priority_var,command=lambda: set_priority(priority_var))
-    p_one.grid(row=0, column=0)
+    p_one.grid(row=2, column=0)
 
     p_two = Radiobutton(child_frame, text="Priority 2", value= "P2",variable=priority_var,command=lambda: set_priority(priority_var))
-    p_two.grid(row=0, column=1)
+    p_two.grid(row=2, column=1)
 
     p_three = Radiobutton(child_frame, text="Priority 3", value= "P3",variable=priority_var,command=lambda: set_priority(priority_var))
-    p_three.grid(row=0, column=2)
+    p_three.grid(row=2, column=2)
 
 def update_custom_label(custom_var):
         global custom_label
@@ -163,7 +169,7 @@ def labels(parent_frame):
     custom_var = StringVar()
     Label(parent_frame,text="CUSTOM LABEL:").grid(row=0,column=1)
     custom_label_entry = Entry(parent_frame, textvariable=custom_var)
-    custom_label_entry.grid(row=0,column=2)
+    custom_label_entry.grid(row=0,column=3)
 
     custom_var.trace_add("write", update_custom_label)
 
@@ -189,17 +195,24 @@ def add():
     add_frame.pack(pady=300)
 
     #Add task WIDGETS
-    add_task_label = Label(add_frame, text="Add Task")
+
+    frame_1 = Frame(add_frame)
+    frame_1.grid(row=0, column=0)
+
+    add_task_label = Label(frame_1, text="Add Task")
     add_task_label.grid(row=0, column=0)
 
-    add_task_entry = Entry(add_frame)
+    add_task_entry = Entry(frame_1)
     add_task_entry.grid(row=0, column=1)
 
-    add_task_button = Button(add_frame, text="Add Task", command=lambda:add_to_database(add_task_entry.get(),priority))
+    add_task_button = Button(frame_1, text="Add Task", command=lambda:add_to_database(add_task_entry.get(),priority))
     add_task_button.grid(row=0, column=2)
 
-    labels_parent_frame = Frame(add_frame)
-    labels_parent_frame.grid(row=1, column=0)
+    frame_2= Frame(add_frame)
+    frame_2.grid(row=1, column=0)
+
+    labels_parent_frame = Frame(frame_2)
+    labels_parent_frame.grid(row=1, column=1)
     labels(labels_parent_frame)
 
 
