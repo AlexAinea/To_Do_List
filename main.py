@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import database_user_client_side
+from datetime import datetime
 
 # Global variables
 placeholder_frame = None
@@ -13,6 +14,8 @@ avatar_path_entry = None
 main_frame_global = None
 priority = None
 custom_label = None
+task_name = None
+task_date = None
 
 # Function to maximize window
 def maximize_window(event=None):
@@ -181,11 +184,26 @@ def notifications():
 def hide():
     pass
 
-def add_to_database():
+def update_task_name(task_name_var):
+    global task_name
+    task_name = task_name_var.get()
+
+def update_date(task_date_var):
+    global task_date
+    task_date_end = task_date_var.get()
+
+def add_to_database(t_name , c_label , p_r,t_date):
     pass
 
+
 def add():
-    global main_frame_global , priority
+    global main_frame_global , priority , custom_label , task_name ,task_date ,
+
+    t_name = task_name
+    c_label = custom_label
+    p_r = priority
+    t_date = task_date
+
     #Current page frame
     current_page_frame = Frame(main_frame_global)
     current_page_frame.pack(fill="y")
@@ -202,14 +220,29 @@ def add():
     add_task_label = Label(frame_1, text="Add Task")
     add_task_label.grid(row=0, column=0)
 
-    add_task_entry = Entry(frame_1)
+    task_name_var = StringVar()
+    add_task_entry = Entry(frame_1, textvariable=task_name_var)
     add_task_entry.grid(row=0, column=1)
+    task_name_var.trace_add("write",update_task_name)
 
-    add_task_button = Button(frame_1, text="Add Task", command=lambda:add_to_database(add_task_entry.get(),priority))
-    add_task_button.grid(row=0, column=2)
+    add_button = Button(frame_1, text="ADD",command=lambda:add_to_database(t_name , c_label , p_r,t_date))
+    add_button.grid(row=0, column=2)
+
 
     frame_2= Frame(add_frame)
     frame_2.grid(row=1, column=0)
+
+    frame_3 = Frame(add_frame)
+    frame_3.grid(row=2, column=0)
+
+    #Task details
+    date_label = Label(frame_3, text="COMLETION DATE:")
+    date_label.grid(row=0, column=0)
+
+    completion_date_var = StringVar()
+    completion_date_entry = Entry(frame_3, textvariable=completion_date_var)
+    completion_date_entry.grid(row=0, column=1)
+    completion_date_var.trace_add("write",update_date)
 
     labels_parent_frame = Frame(frame_2)
     labels_parent_frame.grid(row=1, column=1)
