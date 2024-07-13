@@ -28,7 +28,8 @@ def sign_up(username, password, avatar):
 
 def print_results():
     global user_array
-    print(user_array)
+    hashed_password = user_array[2]
+    print(hashed_password)
 
 def log_in(username, password):
     global user_array

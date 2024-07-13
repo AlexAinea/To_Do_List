@@ -16,6 +16,7 @@ priority = None
 custom_label = None
 task_name = None
 task_date = None
+task_start_date = None
 
 # Function to maximize window
 def maximize_window(event=None):
@@ -192,12 +193,16 @@ def update_date(task_date_var):
     global task_date
     task_date_end = task_date_var.get()
 
+def update_start_date(task_start_date_var):
+    global task_start_date
+    task_start_date = task_start_date_var
+
 def add_to_database(t_name , c_label , p_r,t_date):
     pass
 
 
 def add():
-    global main_frame_global , priority , custom_label , task_name ,task_date ,
+    global main_frame_global , priority , custom_label , task_name ,task_date ,task_start_date
 
     t_name = task_name
     c_label = custom_label
@@ -243,6 +248,16 @@ def add():
     completion_date_entry = Entry(frame_3, textvariable=completion_date_var)
     completion_date_entry.grid(row=0, column=1)
     completion_date_var.trace_add("write",update_date)
+
+    date_label = Label(frame_3, text="START DATE:")
+    date_label.grid(row=2, column=0)
+
+    task_start_date_var = StringVar()
+    task_start_date_entry = Entry(frame_3, textvariable=task_start_date_var)
+    task_start_date_entry.grid(row=2, column=1)
+    task_start_date_var.trace_add("write",update_start_date)
+
+    Label(frame_3,text="YY/MM/DD format for dates").grid(row=3, column=0)
 
     labels_parent_frame = Frame(frame_2)
     labels_parent_frame.grid(row=1, column=1)
