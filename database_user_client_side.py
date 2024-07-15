@@ -48,13 +48,11 @@ def log_in(username, password):
         # Create the user's task table
         cursor.execute(f"""
             CREATE TABLE IF NOT EXISTS {table_name} (
-                TASKS TEXT,
-                ONGOING INTEGER,
-                COMPLETED INTEGER,
-                DATE_TO_BE_COMPLETED INTEGER,
-                REMINDER INTEGER,
-                OVERDUE INTEGER,
-                LABELS TEXT
+                TASK_NAME TEXT,
+                LABELS TEXT,
+                PRIORITY_LEVEL TEXT,
+                DATE_TO_BE_COMPLETED TEXT,
+                START_DATE TEXT
             )
         """)
     
@@ -63,7 +61,7 @@ def log_in(username, password):
 
     print_results()
 
-def add_task(task_name, custom_label, priority_level):
+def add_task(task_name, custom_label, priority_level,date_to_be_completed,start_date):
     global user_array
 
     if user_array is None:
@@ -76,8 +74,8 @@ def add_task(task_name, custom_label, priority_level):
     conn = sqlite3.connect("USERS.db")
     cursor = conn.cursor()
 
-    cursor.execute(f"INSERT INTO {table_name} (TASKS, ONGOING, COMPLETED, DATE_TO_BE_COMPLETED, REMINDER, OVERDUE, LABELS) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                   (task_name, 0, 0, priority_level, 0, 0, custom_label))
+    cursor.execute(f"INSERT INTO {table_name} (TASK_NAME,LABELS,PRIORITY_LEVEL, DATE_TO_BE_COMPLETED,START_DATE ) VALUES (?, ?, ?, ?, ?)",
+                   (task_name, custom_label,priority_level,date_to_be_completed,start_date))
 
     conn.commit()
     conn.close()

@@ -188,6 +188,7 @@ def hide():
 def update_task_name(task_name_var):
     global task_name
     task_name = task_name_var.get()
+    print(task_name)
 
 def update_date(task_date_var):
     global task_date
@@ -197,8 +198,10 @@ def update_start_date(task_start_date_var):
     global task_start_date
     task_start_date = task_start_date_var
 
-def add_to_database(t_name , c_label , p_r,t_date):
-    pass
+def global_handler():
+    global task_name
+    print(task_name)
+    database_user_client_side.add_task(task_name, "task", "task", "task", "task")
 
 
 def add():
@@ -208,6 +211,7 @@ def add():
     c_label = custom_label
     p_r = priority
     t_date = task_date
+    s_date = task_start_date
 
     #Current page frame
     current_page_frame = Frame(main_frame_global)
@@ -228,9 +232,9 @@ def add():
     task_name_var = StringVar()
     add_task_entry = Entry(frame_1, textvariable=task_name_var)
     add_task_entry.grid(row=0, column=1)
-    task_name_var.trace_add("write",update_task_name)
+    task_name_var.trace_add("write",lambda *args :update_task_name(task_name_var))
 
-    add_button = Button(frame_1, text="ADD",command=lambda:add_to_database(t_name , c_label , p_r,t_date))
+    add_button = Button(frame_1, text="ADD",command=global_handler)
     add_button.grid(row=0, column=2)
 
 
