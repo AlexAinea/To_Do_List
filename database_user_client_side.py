@@ -31,6 +31,20 @@ def print_results():
     hashed_password = user_array[2]
     print(hashed_password)
 
+def login_user_query():
+    conn = sqlite3.connect("USERS.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM USERS")
+    users = cursor.fetchall()
+
+    for user in users:
+        n = user[1]
+        p = user[2]
+        print(f"Username: {n}, Password: {p}")
+
+    conn.close()
+    return n,p
+
 def log_in(username, password):
     global user_array
 
@@ -58,8 +72,6 @@ def log_in(username, password):
     
     conn.commit()
     conn.close()
-
-    print_results()
 
 def add_task(task_name, custom_label, priority_level,date_to_be_completed,start_date):
     global user_array

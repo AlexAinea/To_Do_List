@@ -26,6 +26,12 @@ def maximize_window(event=None):
 def sign_up_success():
     messagebox.showinfo('Sign Up Success', 'Sign Up Success')
 
+def bad_avatar_path():
+    messagebox.showinfo('NO IMAGE AT PATH', 'NO IMAGE AT PATH!')
+
+def short_password():
+    messagebox.showinfo('NO IMAGE AT PATH', 'PASSWORD LENGTH MUST BE MORE THAN 8 CHARACTERS!')
+
 # Database sign-up function
 def sign_up_database():
     username = username_entry.get()
@@ -37,14 +43,20 @@ def sign_up_database():
     hasher.update(password.encode())
     hashed_password = hasher.hexdigest()
 
+    try:
     # Avatar image processing to binary data to be stored in database
-    with open(avatar_path, 'rb') as pre_binary:
-        binary = pre_binary.read()
+        with open(avatar_path, 'rb') as pre_binary:
+            binary = pre_binary.read()
+    except FileNotFoundError as e:
+        bad_avatar_path()
 
-    database_user_client_side.sign_up(username, hashed_password, binary)
+    if len(password) < 8:
+        short_password()
+    else:
+        database_user_client_side.sign_up(username, hashed_password, binary)
 
-    # Call the sign-up success function to show the pop-up
-    sign_up_success()
+        # Call the sign-up success function to show the pop-up
+        sign_up_success()
 
 # Database log-in function
 def log_in_database():
@@ -58,26 +70,31 @@ def log_in_database():
     hasher.update(password.encode())
     hashed_password = hasher.hexdigest()
 
-    database_user_client_side.log_in(username, hashed_password)
+    n,p = database_user_client_side.login_user_query()
 
-    # Destroy the placeholder frame
-    form.destroy()
-    placeholder_frame.destroy()
+    if username == n and hashed_password == p:
+        database_user_client_side.log_in(username, hashed_password)
 
-    # Load user details and avatar image
-    user = database_user_client_side.user_array
-    binary_avatar = user[3]
+        # Destroy the placeholder frame
+        form.destroy()
+        placeholder_frame.destroy()
 
-    # Convert binary data to image
-    image = Image.open(BytesIO(binary_avatar))
-    image = image.resize((50, 50))
-    avatar_image = ImageTk.PhotoImage(image)
+        # Load user details and avatar image
+        user = database_user_client_side.user_array
+        binary_avatar = user[3]
 
-    # Store avatar image in a persistent variable
-    root.avatar_image = avatar_image
+        # Convert binary data to image
+        image = Image.open(BytesIO(binary_avatar))
+        image = image.resize((50, 50))
+        avatar_image = ImageTk.PhotoImage(image)
 
-    # BEGIN main instance display
-    main()
+        # Store avatar image in a persistent variable
+        root.avatar_image = avatar_image
+
+        # BEGIN main instance display
+        main()
+    else:
+        messagebox.showinfo('Log In Failed', 'Incorrect username or password')
 
 # Function to create and switch to Sign Up frame
 def sign_up():
@@ -206,7 +223,6 @@ def global_handler():
     global task_name,priority,custom_label,task_date,task_start_date
     print(task_name,priority,custom_label,task_date,task_start_date)
     database_user_client_side.add_task(task_name,priority,custom_label,task_date,task_start_date)
-
 
 def add():
     global main_frame_global , priority , custom_label , task_name ,task_date ,task_start_date
