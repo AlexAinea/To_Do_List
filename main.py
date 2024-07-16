@@ -139,6 +139,7 @@ def log_in():
 def set_priority(priority_var):
     global priority
     priority = priority_var.get()
+    print(priority)
 
 def priority_level(child_frame):
     priority_var = StringVar()
@@ -159,8 +160,9 @@ def priority_level(child_frame):
     p_three.grid(row=2, column=2)
 
 def update_custom_label(custom_var):
-        global custom_label
-        custom_label = custom_var.get()
+    global custom_label
+    custom_label = custom_var.get()
+    print(custom_label)
 
 #THIS FUNCTION IS FOR DRY:IT TAKE S A PARENT FRAME THAT IS IN GRID FORMAT<PERHAPS A PLACEHOLDER FRAME< AND ENSURES POP UP ABLIITY
 def labels(parent_frame):
@@ -175,7 +177,7 @@ def labels(parent_frame):
     custom_label_entry = Entry(parent_frame, textvariable=custom_var)
     custom_label_entry.grid(row=0,column=3)
 
-    custom_var.trace_add("write", update_custom_label)
+    custom_var.trace_add("write", lambda *args :update_custom_label(custom_var))
 
 # notifications function
 def notifications():
@@ -190,18 +192,20 @@ def update_task_name(task_name_var):
     task_name = task_name_var.get()
     print(task_name)
 
-def update_date(task_date_var):
+def update_date(completion_date_var):
     global task_date
-    task_date_end = task_date_var.get()
+    task_date = completion_date_var.get()
+    print(task_date)
 
 def update_start_date(task_start_date_var):
     global task_start_date
-    task_start_date = task_start_date_var
+    task_start_date = task_start_date_var.get()
+    print(task_start_date)
 
 def global_handler():
-    global task_name
-    print(task_name)
-    database_user_client_side.add_task(task_name, "task", "task", "task", "task")
+    global task_name,priority,custom_label,task_date,task_start_date
+    print(task_name,priority,custom_label,task_date,task_start_date)
+    database_user_client_side.add_task(task_name,priority,custom_label,task_date,task_start_date)
 
 
 def add():
@@ -251,7 +255,7 @@ def add():
     completion_date_var = StringVar()
     completion_date_entry = Entry(frame_3, textvariable=completion_date_var)
     completion_date_entry.grid(row=0, column=1)
-    completion_date_var.trace_add("write",update_date)
+    completion_date_var.trace_add("write",lambda *args :update_date(completion_date_var))
 
     date_label = Label(frame_3, text="START DATE:")
     date_label.grid(row=2, column=0)
@@ -259,7 +263,7 @@ def add():
     task_start_date_var = StringVar()
     task_start_date_entry = Entry(frame_3, textvariable=task_start_date_var)
     task_start_date_entry.grid(row=2, column=1)
-    task_start_date_var.trace_add("write",update_start_date)
+    task_start_date_var.trace_add("write",lambda *args :update_start_date(task_start_date_var))
 
     Label(frame_3,text="YY/MM/DD format for dates").grid(row=3, column=0)
 
