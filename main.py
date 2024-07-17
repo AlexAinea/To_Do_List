@@ -17,6 +17,7 @@ custom_label = None
 task_name = None
 task_date = None
 task_start_date = None
+n_p_holder = {}
 
 # Function to maximize window
 def maximize_window(event=None):
@@ -60,7 +61,7 @@ def sign_up_database():
 
 # Database log-in function
 def log_in_database():
-    global placeholder_frame, form
+    global placeholder_frame, form ,n_p_holder
 
     username = username_entry.get()
     password = password_entry.get()
@@ -70,9 +71,13 @@ def log_in_database():
     hasher.update(password.encode())
     hashed_password = hasher.hexdigest()
 
-    n,p = database_user_client_side.login_user_query()
+    users = database_user_client_side.login_user_query()
+    for user in users:
+        n = user[1]
+        p = user[2]
+        n_p_holder[n] = p
 
-    if username == n and hashed_password == p:
+    if username in n_p_holder and hashed_password == n_p_holder[username]:
         database_user_client_side.log_in(username, hashed_password)
 
         # Destroy the placeholder frame
@@ -94,7 +99,7 @@ def log_in_database():
         # BEGIN main instance display
         main()
     else:
-        messagebox.showinfo('Log In Failed', 'Incorrect username or password')
+        messagebox.showinfo('Invalid Login', 'Invalid Username or Password')
 
 # Function to create and switch to Sign Up frame
 def sign_up():

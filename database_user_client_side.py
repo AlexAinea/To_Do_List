@@ -36,14 +36,11 @@ def login_user_query():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM USERS")
     users = cursor.fetchall()
-
-    for user in users:
-        n = user[1]
-        p = user[2]
-        print(f"Username: {n}, Password: {p}")
-
     conn.close()
-    return n,p
+
+    return users
+    
+    
 
 def log_in(username, password):
     global user_array
@@ -72,6 +69,7 @@ def log_in(username, password):
     
     conn.commit()
     conn.close()
+    # login_user_query()
 
 def add_task(task_name, custom_label, priority_level,date_to_be_completed,start_date):
     global user_array
