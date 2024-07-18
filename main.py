@@ -114,22 +114,22 @@ def sign_up():
     placeholder_frame.pack(pady=20)
 
     # Addition of widgets to the Sign Up frame
-    username_label = Label(placeholder_frame, text="Username:")
+    username_label = Label(placeholder_frame, borderwidth=0,text="Username:")
     username_label.grid(row=0, column=0)
-    username_entry = Entry(placeholder_frame, width=30)
+    username_entry = Entry(placeholder_frame,borderwidth=0, width=30)
     username_entry.grid(row=0, column=1)
 
-    password_label = Label(placeholder_frame, text="Password:")
+    password_label = Label(placeholder_frame,borderwidth=0,text="Password:")
     password_label.grid(row=1, column=0)
-    password_entry = Entry(placeholder_frame, width=30, show="*")
+    password_entry = Entry(placeholder_frame,borderwidth=0, width=30, show="*")
     password_entry.grid(row=1, column=1)
 
-    avatar_path_label = Label(placeholder_frame, text="Avatar Path:")
+    avatar_path_label = Label(placeholder_frame,borderwidth=0,text="Avatar Path:")
     avatar_path_label.grid(row=2, column=0)
-    avatar_path_entry = Entry(placeholder_frame, width=30)
+    avatar_path_entry = Entry(placeholder_frame,borderwidth=0, width=30)
     avatar_path_entry.grid(row=2, column=1)
 
-    submit_button = Button(placeholder_frame, text="Sign Up", command=sign_up_database)
+    submit_button = Button(placeholder_frame, borderwidth=0,text="Sign Up",command=sign_up_database)
     submit_button.grid(row=3, column=1)
 
 # Function to create and switch to Log In frame
@@ -145,17 +145,17 @@ def log_in():
     placeholder_frame.pack(pady=20)
 
     # Add widgets as needed for Log In form
-    username_label = Label(placeholder_frame, text="Username:")
+    username_label = Label(placeholder_frame,borderwidth=0, text="Username:")
     username_label.grid(row=0, column=0)
-    username_entry = Entry(placeholder_frame, width=30)
+    username_entry = Entry(placeholder_frame,borderwidth=0, width=30)
     username_entry.grid(row=0, column=1)
 
-    password_label = Label(placeholder_frame, text="Password:")
+    password_label = Label(placeholder_frame,borderwidth=0, text="Password:")
     password_label.grid(row=1, column=0)
-    password_entry = Entry(placeholder_frame, width=30, show="*")
+    password_entry = Entry(placeholder_frame,borderwidth=0, width=30, show="*")
     password_entry.grid(row=1, column=1)
 
-    submit_button = Button(placeholder_frame, text="Log In", command=log_in_database)
+    submit_button = Button(placeholder_frame,borderwidth=0,text="Log In",command=log_in_database)
     submit_button.grid(row=2, column=1)
 
 def set_priority(priority_var):
@@ -172,13 +172,13 @@ def priority_level(child_frame):
     randy2 = Label(child_frame,text="")
     randy2.grid(row=1, column=0)
 
-    p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",variable=priority_var,command=lambda: set_priority(priority_var))
+    p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",bg="white", fg="orange",variable=priority_var,command=lambda: set_priority(priority_var))
     p_one.grid(row=2, column=0)
 
-    p_two = Radiobutton(child_frame, text="Priority 2", value= "P2",variable=priority_var,command=lambda: set_priority(priority_var))
+    p_two = Radiobutton(child_frame, text="Priority 2", value= "P2",bg="white", fg="orange",variable=priority_var,command=lambda: set_priority(priority_var))
     p_two.grid(row=2, column=1)
 
-    p_three = Radiobutton(child_frame, text="Priority 3", value= "P3",variable=priority_var,command=lambda: set_priority(priority_var))
+    p_three = Radiobutton(child_frame, text="Priority 3", value= "P3",bg="white", fg="orange",variable=priority_var,command=lambda: set_priority(priority_var))
     p_three.grid(row=2, column=2)
 
 def update_custom_label(custom_var):
@@ -191,7 +191,7 @@ def labels(parent_frame):
     child_frame = Frame(parent_frame)
     child_frame.grid(row=0, column=1)
 
-    priority_button = Button(parent_frame,text="PRIORITY LEVEL",command=lambda:priority_level(child_frame))
+    priority_button = Button(parent_frame,bg="white", fg="orange",text="PRIORITY LEVEL",command=lambda:priority_level(child_frame))
     priority_button.grid(row=0 , column=0)
 
     custom_var = StringVar()
@@ -259,7 +259,7 @@ def add():
     add_task_entry.grid(row=0, column=1)
     task_name_var.trace_add("write",lambda *args :update_task_name(task_name_var))
 
-    add_button = Button(frame_1, text="ADD",command=global_handler)
+    add_button = Button(frame_1, text="ADD",bg="white", fg="orange",command=global_handler)
     add_button.grid(row=0, column=2)
 
 
@@ -316,13 +316,13 @@ def calendar():
 def main():
     global main_frame_global
 
-    main_frame = Frame(root)
+    main_frame = Frame(root,background="white")
     main_frame.pack(fill=BOTH, expand=True)
 
     main_frame_global = main_frame
 
     # Side bar creation
-    side_bar_frame = Frame(main_frame, width=250, bg="lightgray", relief="sunken", borderwidth=2)
+    side_bar_frame = Frame(main_frame, width=250, bg="orange", borderwidth=2)
     side_bar_frame.pack(expand=False, fill="y", side="left", anchor="nw")
 
     # User processing
@@ -333,11 +333,11 @@ def main():
     avatar_image = root.avatar_image
 
     # Widget creation
-    user_details_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    user_details_frame = Frame(side_bar_frame,bg="white",borderwidth=2)
     user_details_frame.pack(fill='x', pady=10, padx=10)
     avatar_image_label = Label(user_details_frame, image=avatar_image)
     avatar_image_label.grid(row=0, column=0, padx=5)
-    username_label = Label(user_details_frame, text=username.upper())
+    username_label = Label(user_details_frame, bg="white",fg="black",text=username.upper())
     username_label.grid(row=0, column=1, padx=5)
 
     # Notification image processing
@@ -345,7 +345,7 @@ def main():
     notification_image = ImageTk.PhotoImage(notification_image_pre)
     root.notification_image = notification_image  # Store in root to persist
 
-    overdue_button = Button(user_details_frame, image=notification_image, command=notifications, borderwidth=0, highlightthickness=0)
+    overdue_button = Button(user_details_frame, bg="white",image=notification_image, command=notifications, borderwidth=0, highlightthickness=0)
     overdue_button.grid(row=0, column=2, padx=30)
 
     # Sidebar image processing
@@ -360,77 +360,77 @@ def main():
     add_image = ImageTk.PhotoImage(add_image_pre)
     root.add_image = add_image  # Store in root to persist
 
-    add_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    add_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     add_frame.pack(fill='x', pady=40, padx=10)
     add_button = Button(add_frame, image=add_image, command=add)
     add_button.grid(row=0, column=0, padx=5)
-    add_label = Label(add_frame, text='ADD TASK')
+    add_label = Label(add_frame, bg="white",fg="black",text='ADD TASK')
     add_label.grid(row=0, column=1, padx=30)
 
     search_image_pre = Image.open('./Assets/search.png').resize((20, 20))
     search_image = ImageTk.PhotoImage(search_image_pre)
     root.search_image = search_image  # Store in root to persist
 
-    search_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    search_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     search_frame.pack(fill='x', pady=40, padx=10)
     search_button = Button(search_frame, image=search_image, command=search)
     search_button.grid(row=0, column=0, padx=5)
-    search_label = Label(search_frame, text='SEARCH TASK')
+    search_label = Label(search_frame, bg="white",fg="black",text='SEARCH TASK')
     search_label.grid(row=0, column=1, padx=30)
 
     inbox_image_pre = Image.open('./Assets/inbox.png').resize((20, 20))
     inbox_image = ImageTk.PhotoImage(inbox_image_pre)
     root.inbox_image = inbox_image  # Store in root to persist
 
-    inbox_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    inbox_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     inbox_frame.pack(fill='x', pady=40, padx=10)
     inbox_button = Button(inbox_frame, image=inbox_image, command=inbox)
     inbox_button.grid(row=0, column=0, padx=5)
-    inbox_label = Label(inbox_frame, text='INBOX')
+    inbox_label = Label(inbox_frame, bg="white",fg="black",text='INBOX')
     inbox_label.grid(row=0, column=1, padx=30)
 
     today_image_pre = Image.open('./Assets/today.png').resize((20, 20))
     today_image = ImageTk.PhotoImage(today_image_pre)
     root.today_image = today_image  # Store in root to persist
 
-    today_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    today_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     today_frame.pack(fill='x', pady=40, padx=10)
     today_button = Button(today_frame, image=today_image, command=today)
     today_button.grid(row=0, column=0, padx=5)
-    today_label = Label(today_frame, text='TODAY')
+    today_label = Label(today_frame, bg="white",fg="black",text='TODAY')
     today_label.grid(row=0, column=1, padx=30)
 
     upcoming_image_pre = Image.open('./Assets/upcoming.png').resize((20, 20))
     upcoming_image = ImageTk.PhotoImage(upcoming_image_pre)
     root.upcoming_image = upcoming_image  # Store in root to persist
 
-    upcoming_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    upcoming_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     upcoming_frame.pack(fill='x', pady=40, padx=10)
     upcoming_button = Button(upcoming_frame, image=upcoming_image, command=upcoming)
     upcoming_button.grid(row=0, column=0, padx=5)
-    upcoming_label = Label(upcoming_frame, text='UPCOMING')
+    upcoming_label = Label(upcoming_frame, bg="white",fg="black",text='UPCOMING')
     upcoming_label.grid(row=0, column=1, padx=30)
 
     home_image_pre = Image.open('./Assets/home.png').resize((20, 20))
     home_image = ImageTk.PhotoImage(home_image_pre)
     root.home_image = home_image  # Store in root to persist
 
-    home_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    home_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     home_frame.pack(fill='x', pady=40, padx=10)
     home_button = Button(home_frame, image=home_image, command=home)
     home_button.grid(row=0, column=0, padx=5)
-    home_label = Label(home_frame, text='HOME')
+    home_label = Label(home_frame, bg="white",fg="black",text='HOME')
     home_label.grid(row=0, column=1, padx=30)
 
     calendar_image_pre = Image.open('./Assets/calendar.png').resize((20, 20))
     calendar_image = ImageTk.PhotoImage(calendar_image_pre)
     root.calendar_image = calendar_image  # Store in root to persist
 
-    calendar_frame = Frame(side_bar_frame, relief="sunken", borderwidth=2)
+    calendar_frame = Frame(side_bar_frame, bg="white", borderwidth=2)
     calendar_frame.pack(fill='x', pady=40, padx=10)
     calendar_button = Button(calendar_frame, image=calendar_image, command=calendar)
     calendar_button.grid(row=0, column=0, padx=5)
-    calendar_label = Label(calendar_frame, text='CALENDAR')
+    calendar_label = Label(calendar_frame,fg="black", bg="white",text='CALENDAR')
     calendar_label.grid(row=0, column=1, padx=30)
 
 # Main Tkinter window
@@ -441,13 +441,13 @@ root.title("DO IT")
 root.bind('<Configure>', maximize_window)
 
 # Frame containing Sign Up and Log In buttons
-form = Frame(root)
+form = Frame(root,borderwidth=0)
 form.pack(pady=200)
 
-sign_up_button_option = Button(form, text="Sign Up", command=sign_up)
+sign_up_button_option = Button(form,text="Sign Up", command=sign_up)
 sign_up_button_option.grid(row=0, column=0)
 
-log_in_button_option = Button(form, text="Log In", command=log_in)
+log_in_button_option = Button(form,text="Log In", command=log_in)
 log_in_button_option.grid(row=0, column=1)
 
 # Start the main event loop
