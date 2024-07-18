@@ -166,10 +166,10 @@ def set_priority(priority_var):
 def priority_level(child_frame):
     priority_var = StringVar()
 
-    randy = Label(child_frame,text="")
+    randy = Label(child_frame,text="",fg="orange",bg="orange")
     randy.grid(row=0, column=0)
 
-    randy2 = Label(child_frame,text="")
+    randy2 = Label(child_frame,text="",fg="orange",bg="orange")
     randy2.grid(row=1, column=0)
 
     p_one = Radiobutton(child_frame, text="Priority 1", value= "P1",bg="white", fg="orange",variable=priority_var,command=lambda: set_priority(priority_var))
@@ -188,14 +188,14 @@ def update_custom_label(custom_var):
 
 #THIS FUNCTION IS FOR DRY:IT TAKE S A PARENT FRAME THAT IS IN GRID FORMAT<PERHAPS A PLACEHOLDER FRAME< AND ENSURES POP UP ABLIITY
 def labels(parent_frame):
-    child_frame = Frame(parent_frame)
+    child_frame = Frame(parent_frame,bg="orange")
     child_frame.grid(row=0, column=1)
 
     priority_button = Button(parent_frame,bg="white", fg="orange",text="PRIORITY LEVEL",command=lambda:priority_level(child_frame))
     priority_button.grid(row=0 , column=0)
 
     custom_var = StringVar()
-    Label(parent_frame,text="CUSTOM LABEL:").grid(row=0,column=1)
+    Label(parent_frame,fg="black",bg="orange",text="CUSTOM LABEL:").grid(row=0,column=1)
     custom_label_entry = Entry(parent_frame, textvariable=custom_var)
     custom_label_entry.grid(row=0,column=3)
 
@@ -232,26 +232,20 @@ def global_handler():
 def add():
     global main_frame_global , priority , custom_label , task_name ,task_date ,task_start_date
 
-    t_name = task_name
-    c_label = custom_label
-    p_r = priority
-    t_date = task_date
-    s_date = task_start_date
-
     #Current page frame
-    current_page_frame = Frame(main_frame_global)
+    current_page_frame = Frame(main_frame_global,bg="white")
     current_page_frame.pack(fill="y")
 
     #Addition area
-    add_frame = Frame(current_page_frame)
+    add_frame = Frame(current_page_frame,bg="orange")
     add_frame.pack(pady=300)
 
     #Add task WIDGETS
 
-    frame_1 = Frame(add_frame)
+    frame_1 = Frame(add_frame,bg="orange")
     frame_1.grid(row=0, column=0)
 
-    add_task_label = Label(frame_1, text="Add Task")
+    add_task_label = Label(frame_1, text="Add Task",bg="orange",fg="black")
     add_task_label.grid(row=0, column=0)
 
     task_name_var = StringVar()
@@ -259,18 +253,18 @@ def add():
     add_task_entry.grid(row=0, column=1)
     task_name_var.trace_add("write",lambda *args :update_task_name(task_name_var))
 
-    add_button = Button(frame_1, text="ADD",bg="white", fg="orange",command=global_handler)
+    add_button = Button(frame_1, text="ADD",bg="orange", fg="orange",command=global_handler)
     add_button.grid(row=0, column=2)
 
 
-    frame_2= Frame(add_frame)
+    frame_2= Frame(add_frame,bg="orange")
     frame_2.grid(row=1, column=0)
 
-    frame_3 = Frame(add_frame)
+    frame_3 = Frame(add_frame,bg="orange")
     frame_3.grid(row=2, column=0)
 
     #Task details
-    date_label = Label(frame_3, text="COMLETION DATE:")
+    date_label = Label(frame_3,fg="black",bg="orange",text="COMLETION DATE:")
     date_label.grid(row=0, column=0)
 
     completion_date_var = StringVar()
@@ -278,7 +272,7 @@ def add():
     completion_date_entry.grid(row=0, column=1)
     completion_date_var.trace_add("write",lambda *args :update_date(completion_date_var))
 
-    date_label = Label(frame_3, text="START DATE:")
+    date_label = Label(frame_3, text="START DATE:",fg="black",bg="orange")
     date_label.grid(row=2, column=0)
 
     task_start_date_var = StringVar()
@@ -286,9 +280,9 @@ def add():
     task_start_date_entry.grid(row=2, column=1)
     task_start_date_var.trace_add("write",lambda *args :update_start_date(task_start_date_var))
 
-    Label(frame_3,text="YY/MM/DD format for dates").grid(row=3, column=0)
+    Label(frame_3,text="YY/MM/DD format for dates",fg="black",bg="orange").grid(row=3, column=0)
 
-    labels_parent_frame = Frame(frame_2)
+    labels_parent_frame = Frame(frame_2,bg="orange")
     labels_parent_frame.grid(row=1, column=1)
     labels(labels_parent_frame)
 
