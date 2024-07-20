@@ -285,7 +285,7 @@ def add():
     labels_parent_frame = Frame(frame_2,bg="orange")
     labels_parent_frame.grid(row=1, column=1)
     labels(labels_parent_frame)
-
+    yes = True
 
 
 def search():
